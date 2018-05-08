@@ -1,8 +1,8 @@
 import { GET_PLAYER } from './actionTypes';
 
-export function getPlayer(name) {
+export function getPlayer(firstName, surname) {
     return {
         type: GET_PLAYER,
-        payload: name
+        payload: { firstName, surname }
     }
 }
