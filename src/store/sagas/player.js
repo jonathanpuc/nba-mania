@@ -9,6 +9,15 @@ import {
 const statsURL = 'https://nba-players.herokuapp.com/players-stats/';
 const imageURL = 'https://nba-players.herokuapp.com/players/';
 
+const statsWeWant = [
+    'points_per_game',
+    'assists_per_game',
+    'blocks_per_game',
+    'three_point_percentage',
+    'field_goal_percentage',
+    'rebounds_per_game'
+]
+
 function fetchPlayerData(firstName, surname) {
     let url = `${statsURL}${surname}/${firstName}`;
 
@@ -17,18 +26,33 @@ function fetchPlayerData(firstName, surname) {
     );
 }
 
-
 export function* retrievePlayer(action) {
-    let { firstName, surname } = action.payload.name;
+    let { firstName, surname } = action.payload;
     try {
-        let stats = yield call(fetchPlayerData, firstName, surname);
-        let image = `${imageURL}${surname}/${firstName}`;
+        // grab the data from the players heroku api
+        let response = yield call(fetchPlayerData, firstName, surname);
 
-        let playerProfile = {
-            ...stats.data,
-            image
+        // if a player is found and returned to us
+        if (response.data.name) {
+            let image = `${imageURL}${surname}/${firstName}`;
+            let stats = {}
+
+            // loop over keys in data
+            for (let key in response.data) {
+                // if key matches one of the stats we want
+                if (statsWeWant.includes(key)) {
+                    // assign it to our stats variable
+                    stats[key] = response.data[key];
+                }
+            }
+
+            let playerProfile = {
+                ...response.data,
+                stats,
+                image
+            }
+            yield put({ type: GET_PLAYER_SUCCESS, payload: playerProfile });
         }
-        yield put({ type: GET_PLAYER_SUCCESS, payload: playerProfile });
 
     } catch (e) {
         yield put({ type: GET_PLAYER_FAIL, payload: e });
