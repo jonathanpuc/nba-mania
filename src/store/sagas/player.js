@@ -35,14 +35,14 @@ export function* retrievePlayer(action) {
         // if a player is found and returned to us
         if (response.data.name) {
             let image = `${imageURL}${surname}/${firstName}`;
-            let stats = {}
+            let stats = [];
 
             // loop over keys in data
             for (let key in response.data) {
                 // if key matches one of the stats we want
                 if (statsWeWant.includes(key)) {
                     // assign it to our stats variable
-                    stats[key] = response.data[key];
+                    stats.push({ label: key, value: response.data[key] })
                 }
             }
 

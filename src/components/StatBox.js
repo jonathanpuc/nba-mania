@@ -24,7 +24,7 @@ export default function StatBox({ stat }) {
 }
 
 const Outer = styled.div`
-    padding: 15px;
+
 `
 
 const StatLabel = styled.span`
@@ -35,4 +35,5 @@ const StatLabel = styled.span`
 const StatValue = styled.p`
     font-weight: bold;
     color: #006BB6;
+    font-size: 30px;
 `
