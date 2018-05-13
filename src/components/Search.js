@@ -50,7 +50,8 @@ const SearchWrapper = styled.div`
     display: flex;
     flex-direction:row;
     width: 80%;
-    margin: 0 auto;
+    width: 500px;
+    margin: 25px auto;
 `
 
 const SearchBar = styled.input`

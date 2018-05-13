@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
-
-import { ThemeProvider } from 'styled-components';
 import Player from './components/Player';
-const theme = {
-  blue: '#006BB6'
-}
+import Search from './components/Search';
+
 
 class App extends Component {
   render() {
     return (
-      <ThemeProvider theme={theme}>
+      <div>
+        <Search />
         <Player />
-      </ThemeProvider>
+      </div>
     );
   }
 }
-
 
 export default App;
